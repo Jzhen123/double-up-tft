@@ -4,7 +4,6 @@ import Homepage from "./components/homepage";
 
 function App() {
   const [isUserSignedIn, setIsUserSignedIn] = useState(false);
-  
   useEffect(() => {
     if (localStorage.getItem("token")) setIsUserSignedIn(true);
     else setIsUserSignedIn(false);
