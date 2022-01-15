@@ -8,10 +8,11 @@ export async function login({ email, password }) {
         console.log(response)
         // If request is not successful, display error message
         if (!response.ok) {
+          return 'bad';
           throw new Error("HTTP status " + response.status);
         }
-  
-        return response.json();
+        
+        return response;
       })
       .catch((err) => {
         console.log(err);

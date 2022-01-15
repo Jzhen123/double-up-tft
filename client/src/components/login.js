@@ -6,17 +6,27 @@ import AuthForm from "./authForm";
 
 import { login } from "../api";
 
-export const Login = () => {
+export const Login = ({ onLoginSuccessful }) => {
     const [loginOrRegister, setLoginOrRegister] = useState('login');
 
+    const submitForm = async (data) => {
+        if (loginOrRegister === 'login') {
+            let response = await login(data);
+            console.log(response);
+            if (response?.status === 200) {
+                onLoginSuccessful();
+            }
+        }
+    }
+    
     return (
         <div className="p-grid nested-grid p-dir-col p-align-center">
             <Panel header={loginOrRegister === 'login' ? 'Login' : 'Register'} style={{ marginTop: 100 }}>
                 <div style={{ padding: 10 }}>
-                    <div className="p-col p-text-bold">
+                    <div className="p-col p-text-bold" style={{ marginTop: 10, marginBottom: 10 }}>
                         Welcome to DoubleUpTFT
                     </div>
-                    <AuthForm typeOfForm={loginOrRegister} onSubmitForm={(data) => login(data)} />
+                    <AuthForm typeOfForm={loginOrRegister} onSubmitForm={(data) => submitForm(data)} />
                     <div className="p-col">
                         {loginOrRegister === 'login' ? 'Don\'t have an account? ' : 'Already have an account? '}
                         <a

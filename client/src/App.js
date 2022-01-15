@@ -16,6 +16,7 @@ function App() {
   }, []);
 
   const onLoginSuccessful = () => {
+    localStorage.setItem('token', 'test');
     setIsUserSignedIn(true);
   };
 
