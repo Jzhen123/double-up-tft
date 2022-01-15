@@ -30,7 +30,6 @@ const AuthForm = ({ typeOfForm, onSubmitForm }) => {
   } = useForm({ defaultValues });
 
   const onSubmit = (data) => {
-    console.log(data)
     setFormData(data);
     // setShowMessage(true);
     onSubmitForm(data);
@@ -65,7 +64,7 @@ const AuthForm = ({ typeOfForm, onSubmitForm }) => {
   );
 
   return (
-    <div className="form-demo">
+    <div className="form-demo p-col">
       <Dialog
         visible={showMessage}
         onHide={() => setShowMessage(false)}
@@ -88,7 +87,6 @@ const AuthForm = ({ typeOfForm, onSubmitForm }) => {
 
       <div className="p-d-flex p-jc-center">
         <div className="card">
-          <h5 className="p-text-center">{typeOfForm == 'register' ? 'Register' : 'Login'}</h5>
           <form onSubmit={handleSubmit(onSubmit)} className="p-fluid">
 
             {/* Name Field */}

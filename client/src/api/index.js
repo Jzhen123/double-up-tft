@@ -2,7 +2,7 @@ export async function login({ email, password }) {
     return await fetch("/api/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
-      headers: { "Content-Type": "application/json", "Accept":"application/json" },
+      headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
         console.log(response)
