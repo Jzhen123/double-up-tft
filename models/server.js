@@ -1,6 +1,5 @@
-
-
 const express = require("express");
+const bodyParser = require('body-parser');
 const cors = require("cors");
 const path = require("path");
 
@@ -19,6 +18,7 @@ class Server {
 
   middlewares() {
     this.app.use(cors()); // Enable CORS
+    this.app.use(bodyParser.json());
   }
 
   // Bind controllers to routes

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-// import { Container, Row, Form, Button, InputGroup } from "react-bootstrap";
+import { Button } from 'primereact/button';
 import { searchArtworks } from "../api";
 
-function Homepage() {
+function Homepage({ onLogout }) {
   const [keyword, setKeyword] = useState("");
   const [artworks, setArtworks] = useState([]);
 
@@ -17,7 +17,7 @@ function Homepage() {
   };
 
   return (
-      'test'
+    <Button label="Sign Out" onClick={() => onLogout()} />
     // <Container fluid>
     //   <Row noGutters>
     //     <Form className="w-100 mb-5" onSubmit={onSearchArtworks}>
