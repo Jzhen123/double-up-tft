@@ -2,9 +2,10 @@ export async function login({ email, password }) {
     return await fetch("/api/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Accept":"application/json" },
     })
       .then((response) => {
+        console.log(response)
         // If request is not successful, display error message
         if (!response.ok) {
           throw new Error("HTTP status " + response.status);
