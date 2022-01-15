@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import Login from "./components/login";
 import Homepage from "./components/homepage";
 import { Login } from "./components/login";
 
@@ -16,7 +15,6 @@ function App() {
   }, []);
 
   const onLoginSuccessful = () => {
-    localStorage.setItem('token', 'test');
     setIsUserSignedIn(true);
   };
 

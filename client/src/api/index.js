@@ -1,38 +1,30 @@
 export async function login({ email, password }) {
     return await fetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => {
-        console.log(response)
-        // If request is not successful, display error message
-        if (!response.ok) {
-          return 'bad';
-          throw new Error("HTTP status " + response.status);
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" },
+    }).then((response) => {
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw new Error("HTTP status " + response.status);
         }
-        
-        return response;
-      })
-      .catch((err) => {
+    }).catch((err) => {
         console.log(err);
-      });
-  }
-  
-  export async function searchArtworks({ keyword }) {
+    });
+}
+
+export async function searchArtworks({ keyword }) {
     return await fetch(`/api/homepage/getArtworks/${keyword}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => {
-        // If request is not successful, display error message
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    }).then((response) => {
         if (!response.ok) {
-          throw new Error("HTTP status " + response.status);
+            throw new Error("HTTP status " + response.status);
         }
-  
+
         return response.json();
-      })
-      .catch((err) => {
+    }).catch((err) => {
         console.log(err);
-      });
-  }
+    });
+}

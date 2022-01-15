@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Panel } from 'primereact/panel';
 
-
 import AuthForm from "./authForm";
 
 import { login } from "../api";
@@ -12,13 +11,13 @@ export const Login = ({ onLoginSuccessful }) => {
     const submitForm = async (data) => {
         if (loginOrRegister === 'login') {
             let response = await login(data);
-            console.log(response);
-            if (response?.status === 200) {
+            if (response?.token) {
+                localStorage.setItem('token', response.token);
                 onLoginSuccessful();
             }
-        }
+        } // else, use register new user api call when it's made
     }
-    
+
     return (
         <div className="p-grid nested-grid p-dir-col p-align-center">
             <Panel header={loginOrRegister === 'login' ? 'Login' : 'Register'} style={{ marginTop: 100 }}>
