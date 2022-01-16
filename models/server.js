@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 const path = require("path");
 
+const knexConfig = require('../db/knexfile');
+const knex = require('knex')(knexConfig[process.env.NODE_ENV])
+
 class Server {
   constructor() {
     this.app = express();
@@ -11,7 +14,6 @@ class Server {
       auth: "/api/auth",
       homepage: "/api/homepage",
     };
-
     this.middlewares();
     this.routes();
   }
