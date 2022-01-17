@@ -19,6 +19,7 @@ class Server {
 
   middlewares() {
     this.app.use(cors()); // Enable CORS
+    this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
   }
 

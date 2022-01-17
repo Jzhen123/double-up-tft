@@ -15,17 +15,19 @@ const getChampionByID = async (req, res = response) => {
 
 const createChampion = async (req, res = response) => {
     const { name, cost } = req.body;
-    await Champion.query().insert({ name, cost });
+    const champion = await Champion.query().insertAndFetch({ name, cost });
+    res.json(champion);
+}
 
-    res.json({
-        name: name,
-        cost: cost,
-        msg: "Created new champion!",
-    });
+const updateChampion = async (req, res = response) => {
+    const champion = req.body;
+    const result = await Champion.query().patchAndFetchById(champion.id, champion);
+    res.json(result);
 }
 
 module.exports = {
     createChampion,
     getAllChampions,
     getChampionByID,
+    updateChampion,
 };
