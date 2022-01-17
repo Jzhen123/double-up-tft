@@ -1,46 +1,105 @@
 import React, { useState } from "react";
-import { Button } from 'primereact/button';
-import { searchArtworks } from "../api";
+
+import { useForm, Controller } from "react-hook-form";
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
+import { classNames } from "primereact/utils";
+
+import { createChampion } from "../api";
+
+import "./authForm.css";
 
 function Homepage({ onLogout }) {
-  const [keyword, setKeyword] = useState("");
-  const [artworks, setArtworks] = useState([]);
-
-  const onChangeKeyword = (event) => {
-    setKeyword(event.target.value);
+  const [formData, setFormData] = useState({});
+  const defaultValues = {
+    name: "",
+    cost: "",
   };
 
-  const onSearchArtworks = async (event) => {
-    event.preventDefault();
-    const artworks = await searchArtworks({ keyword });
-    setArtworks(artworks);
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    reset
+  } = useForm({ defaultValues });
+
+  const onSubmit = (data) => {
+    setFormData(data);
+    createChampion(data);
+    reset();
   };
+
+  const getFormErrorMessage = (name) =>
+    errors[name] && <small className="p-error">{errors[name].message}</small>;
 
   return (
-    <Button label="Sign Out" onClick={() => onLogout()} />
-    // <Container fluid>
-    //   <Row noGutters>
-    //     <Form className="w-100 mb-5" onSubmit={onSearchArtworks}>
-    //       <InputGroup>
-    //         <Form.Control
-    //           type="text"
-    //           placeholder="e.g. Monet, O'Keeffe, Ancient Greek..."
-    //           onChange={onChangeKeyword}
-    //           value={keyword}
-    //         />
-    //         <InputGroup.Prepend>
-    //           <Button
-    //             variant="outline-primary"
-    //             disabled={!keyword}
-    //             type="submit"
-    //           >
-    //             Search artworks
-    //           </Button>
-    //         </InputGroup.Prepend>
-    //       </InputGroup>
-    //     </Form>
-    //   </Row>
-    // </Container>
+    <>
+      <div className="form-demo p-col" style={{ marginTop: 50 }}>
+        <div className="p-d-flex p-jc-center">
+          <div className="card">
+            <form onSubmit={handleSubmit(onSubmit)} className="p-fluid">
+
+              {/* Name Field */}
+              <div className="p-field">
+                <span className="p-float-label p-input-icon-right">
+                  <i className="pi pi-user-edit" />
+                  <Controller
+                    name="name"
+                    control={control}
+                    rules={{ required: "Name is required." }}
+                    render={({ field, fieldState }) => (
+                      <InputText
+                        id={field.name}
+                        {...field}
+                        autoFocus
+                        className={classNames({
+                          "p-invalid": fieldState.invalid,
+                        })}
+                      />
+                    )}
+                  />
+                  <label htmlFor="name" className={classNames({ "p-error": errors.name })}>
+                    Champion Name
+                  </label>
+                </span>
+                {getFormErrorMessage("name")}
+              </div>
+
+              {/* Cost Field */}
+              <div className="p-field">
+                <span className="p-float-label p-input-icon-right">
+                  <i className="pi pi-dollar" />
+                  <Controller
+                    name="cost"
+                    control={control}
+                    rules={{
+                      required: "Cost is required.",
+                    }}
+                    render={({ field, fieldState }) => (
+                      <InputText
+                        id={field.name}
+                        {...field}
+                        className={classNames({
+                          "p-invalid": fieldState.invalid,
+                        })}
+                      />
+                    )}
+                  />
+                  <label htmlFor="cost" className={classNames({ "p-error": !!errors.cost })}>
+                    Cost
+                  </label>
+                </span>
+                {getFormErrorMessage("cost")}
+              </div>
+
+              {/* Submit Button */}
+              <Button type="submit" label="Create" className="p-mt-2" />
+            </form>
+          </div>
+        </div>
+      </div>
+      <Button label="Sign Out" onClick={() => onLogout()} />
+    </>
   );
 }
 
