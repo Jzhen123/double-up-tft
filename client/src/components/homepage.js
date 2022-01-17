@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { classNames } from "primereact/utils";
 
-import { createChampion } from "../api";
+import { createChampion } from "../api/champion";
 
 import "./authForm.css";
 
