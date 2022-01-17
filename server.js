@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 const path = require("path");
 
-const User = require('./models/User');
-
 class Server {
   constructor() {
     this.app = express();
@@ -13,6 +11,7 @@ class Server {
     this.paths = {
       auth: "/api/auth",
       homepage: "/api/homepage",
+      champion: "/api/champion",
     };
     this.middlewares();
     this.routes();
@@ -27,6 +26,7 @@ class Server {
   routes() {
     this.app.use(this.paths.auth, require("./routes/auth"));
     this.app.use(this.paths.homepage, require("./routes/homepage"));
+    this.app.use(this.paths.champion, require("./routes/champion"));
   }
 
   listen() {
@@ -39,8 +39,6 @@ class Server {
     const knexConfig = require('./knexfile');
     const knex = require('knex')(knexConfig[process.env.NODE_ENV])
     Model.knex(knex);
-    const user = await User.query();
-    console.log(user);
   }
 }
 
