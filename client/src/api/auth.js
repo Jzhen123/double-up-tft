@@ -13,18 +13,3 @@ export async function login({ email, password }) {
         console.log(err);
     });
 }
-
-export async function searchArtworks({ keyword }) {
-    return await fetch(`/api/homepage/getArtworks/${keyword}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-    }).then((response) => {
-        if (!response.ok) {
-            throw new Error("HTTP status " + response.status);
-        }
-
-        return response.json();
-    }).catch((err) => {
-        console.log(err);
-    });
-}

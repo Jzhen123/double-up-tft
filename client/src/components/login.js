@@ -3,7 +3,7 @@ import { Panel } from 'primereact/panel';
 
 import AuthForm from "./authForm";
 
-import { login } from "../api";
+import { login } from "../api/auth";
 
 export const Login = ({ onLoginSuccessful }) => {
     const [loginOrRegister, setLoginOrRegister] = useState('login');
