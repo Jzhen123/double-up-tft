@@ -1,33 +1,26 @@
-import React, { useEffect, useState } from "react";
-import Homepage from "./components/homepage";
-import { Login } from "./components/login";
+import React, {  } from "react";
+import { Route, Routes } from "react-router-dom";
 
-import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
-import "primereact/resources/primereact.min.css";                  //core css
-import "primeicons/primeicons.css";
-import 'primeflex/primeflex.css';
+
+import Admin from "./pages/Admin";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+
+import Navbar from "./components/Navbar";
 
 function App() {
-  const [isUserSignedIn, setIsUserSignedIn] = useState(false);
-  useEffect(() => {
-    if (localStorage.getItem("token")) setIsUserSignedIn(true);
-    else setIsUserSignedIn(false);
-  }, []);
-
-  const onLoginSuccessful = () => {
-    setIsUserSignedIn(true);
-  };
-
-  const onLogout = () => {
-    localStorage.removeItem("name");
-    localStorage.removeItem("token");
-    setIsUserSignedIn(false);
-  };
-
   return (
-    (isUserSignedIn && <Homepage onLogout={onLogout} />) || (
-      <Login onLoginSuccessful={onLoginSuccessful} />
-    )
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<Admin />} />
+        {/* <Route path="/comps" element={} />
+        <Route path="/leaderboards" element={} />
+        <Route path="/guides" element={} /> */}
+      </Routes>
+    </>
   );
 }
 
