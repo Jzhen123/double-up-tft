@@ -5,7 +5,7 @@ import AuthForm from "../components/AuthForm";
 
 import { login } from "../api/auth";
 
-export default ({ onLoginSuccessful }) => {
+export default () => {
     const [loginOrRegister, setLoginOrRegister] = useState('login');
 
     const submitForm = async (data) => {
@@ -13,7 +13,6 @@ export default ({ onLoginSuccessful }) => {
             let response = await login(data);
             if (response?.token) {
                 localStorage.setItem('token', response.token);
-                onLoginSuccessful();
             }
         } // else, use register new user api call when it's made
     }
