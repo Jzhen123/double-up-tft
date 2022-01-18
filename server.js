@@ -2,7 +2,7 @@ const { Model } = require('objection');
 const express = require("express");
 const bodyParser = require('body-parser');
 const cors = require("cors");
-const path = require("path");
+const api = require('./routes/api');
 
 class Server {
   constructor() {
@@ -15,6 +15,7 @@ class Server {
     };
     this.middlewares();
     this.routes();
+    this.initKnex();
   }
 
   middlewares() {
@@ -25,10 +26,9 @@ class Server {
 
   // Bind controllers to routes
   routes() {
-    this.app.use(this.paths.auth, require("./routes/auth"));
-    this.app.use(this.paths.homepage, require("./routes/homepage"));
-    this.app.use(this.paths.champion, require("./routes/champion"));
+    this.app.use('/api', api);
   }
+
 
   listen() {
     this.app.listen(this.port, () => {
