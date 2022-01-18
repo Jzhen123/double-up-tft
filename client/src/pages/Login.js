@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Panel } from 'primereact/panel';
 
 import AuthForm from "../components/AuthForm";
@@ -7,12 +8,13 @@ import { login } from "../api/auth";
 
 export default () => {
     const [loginOrRegister, setLoginOrRegister] = useState('login');
-
+    const navigate = useNavigate();
     const submitForm = async (data) => {
         if (loginOrRegister === 'login') {
             let response = await login(data);
             if (response?.token) {
                 localStorage.setItem('token', response.token);
+                navigate('/');
             }
         } // else, use register new user api call when it's made
     }

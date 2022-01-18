@@ -32,8 +32,7 @@ export default () => {
 
     return (
         <>
-        hi
-            {/* <div className="form-demo p-col" style={{ marginTop: 50 }}>
+            <div className="form-demo p-col" style={{ marginTop: 50 }}>
                 <div className="p-d-flex p-jc-center">
                     <div className="card">
                         <form onSubmit={handleSubmit(onSubmit)} className="p-fluid">
@@ -93,7 +92,7 @@ export default () => {
                         </form>
                     </div>
                 </div>
-            </div> */}
+            </div>
         </>
     );
 }
