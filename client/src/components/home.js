@@ -9,7 +9,7 @@ import { createChampion } from "../api/champion";
 
 import "./authForm.css";
 
-function Homepage({ onLogout }) {
+export default ({ onLogout }) => {
   const [formData, setFormData] = useState({});
   const defaultValues = {
     name: "",
@@ -102,5 +102,3 @@ function Homepage({ onLogout }) {
     </>
   );
 }
-
-export default Homepage;

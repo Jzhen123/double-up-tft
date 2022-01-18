@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Homepage from "./components/homepage";
-import { Login } from "./components/login";
+import { Routes, Route, Link } from "react-router-dom";
 
-import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
-import "primereact/resources/primereact.min.css";                  //core css
-import "primeicons/primeicons.css";
-import 'primeflex/primeflex.css';
+import Home from "./components/home";
+import Login from "./components/login";
 
 function App() {
   const [isUserSignedIn, setIsUserSignedIn] = useState(false);
@@ -25,9 +22,10 @@ function App() {
   };
 
   return (
-    (isUserSignedIn && <Homepage onLogout={onLogout} />) || (
-      <Login onLoginSuccessful={onLoginSuccessful} />
-    )
+    <Routes>
+      <Route path="/" element={<Home onLogout={onLogout} />} />
+      <Route path="/login" element={<Login onLoginSuccessful={onLoginSuccessful} />} />
+    </Routes>
   );
 }
 

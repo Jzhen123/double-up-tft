@@ -5,7 +5,7 @@ import AuthForm from "./authForm";
 
 import { login } from "../api/auth";
 
-export const Login = ({ onLoginSuccessful }) => {
+export default ({ onLoginSuccessful }) => {
     const [loginOrRegister, setLoginOrRegister] = useState('login');
 
     const submitForm = async (data) => {
