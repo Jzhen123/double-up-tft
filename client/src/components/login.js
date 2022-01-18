@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Panel } from 'primereact/panel';
 
-import AuthForm from "./authForm";
+import AuthForm from "./AuthForm";
 
 import { login } from "../api/auth";
 
