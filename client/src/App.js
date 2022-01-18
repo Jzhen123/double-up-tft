@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
 
+import Navbar from "./components/Navbar";
 
 function App() {
   const navigate = useNavigate();
