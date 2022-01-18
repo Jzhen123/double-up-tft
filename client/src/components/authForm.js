@@ -9,7 +9,7 @@ import { Dialog } from "primereact/dialog";
 import { Divider } from "primereact/divider";
 import { classNames } from "primereact/utils";
 
-import "./authForm.css";
+import "./AuthForm.css";
 
 const AuthForm = ({ typeOfForm, onSubmitForm }) => {
   const [showMessage, setShowMessage] = useState(false);

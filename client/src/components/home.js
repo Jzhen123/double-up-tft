@@ -7,7 +7,7 @@ import { classNames } from "primereact/utils";
 
 import { createChampion } from "../api/champion";
 
-import "./authForm.css";
+import "./AuthForm.css";
 
 export default ({ onLogout }) => {
   const [formData, setFormData] = useState({});
