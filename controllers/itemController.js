@@ -9,7 +9,11 @@ const getAllItems = async (req, res) => {
         item.effects.Mana != 30 || // There are two different Blue Buffs and how we will get the updated one
         item.name === 'Archangel\'s Staff' // The only Archangel's Staff is in set 5 for some reason
     );
-    
+
+    for (const item in filteredItems) {
+        filteredItems[item].icon = filteredItems[item].icon.toLowerCase().replace('dds', 'png'); // url path for image must be reformatted to use client-side
+    }
+
     // Now, filteredItems should only contain Set 6 items
     res.json(filteredItems);
 };

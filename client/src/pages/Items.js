@@ -20,9 +20,8 @@ export default () => {
             {/* <img src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${url}`} /> */}
             {items.length > 0 ?
                 items.map((item) => {
-                    const url = item.icon.toLowerCase().replace('dds', 'png');
                     return (
-                        <img src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${url}`} />
+                        <img src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${item.icon}`} />
                     )
                 })
 
