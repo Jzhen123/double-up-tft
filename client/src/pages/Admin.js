@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useForm, Controller } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
@@ -8,14 +8,19 @@ import { classNames } from "primereact/utils";
 import { createChampion } from "../api/champion";
 import { getAllItems } from "../api/item";
 export default () => {
-    const items = getAllItems();
-    console.log(items);
+    let items = {};
+    useEffect(() => {
+        fetchData();
+    }, [])
     const [formData, setFormData] = useState({});
     const defaultValues = {
         name: "",
         cost: "",
     };
-
+    const fetchData = async () => {
+        items = await getAllItems()
+        console.log(items)
+    }
     const {
         control,
         formState: { errors },
@@ -31,7 +36,7 @@ export default () => {
 
     const getFormErrorMessage = (name) =>
         errors[name] && <small className="p-error">{errors[name].message}</small>;
-        // const url = json.items[405].icon.toLowerCase().replace('dds', 'png');
+    // const url = json.items[405].icon.toLowerCase().replace('dds', 'png');
     return (
         <>
             {/* <img src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${url}`} /> */}

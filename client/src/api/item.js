@@ -3,12 +3,11 @@ export async function getAllItems() {
         method: "GET",
         headers: { "Content-Type": "application/json" },
     }).then((response) => {
-        // if (response.status === 200) {
-            console.log(response)
+        if (response.status === 200) {
             return response.json();
-        // } else {
-        //     throw new Error("HTTP status " + response.status);
-        // }
+        } else {
+            throw new Error("HTTP status " + response.status);
+        }
     }).catch((err) => {
         console.log(err);
     });
