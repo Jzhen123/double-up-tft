@@ -1,13 +1,15 @@
 const tftJSON = require("../client/src/services/tft-data.json");
 
 const getAllItems = async (req, res) => {
-    // In the items array, only indexes 348 and onward are relevant
-    let filteredItems = tftJSON.items.slice(348);
+    let filteredItems = tftJSON.items.slice(348); // Only need indexes 348 and onward in items array
 
-    // Using the url in an item's icon field, we can filter out unrelated items by checking if they include the words 'Standard' or 'Set6'
-    // After that, there are still some weird outliers that can be filtered by checking that there desc field is not the same as their name field
-    filteredItems = filteredItems.filter(item => (item.icon.includes('Standard') || item.icon.includes('Set6')) && item.desc !== item.name); 
-
+    filteredItems = filteredItems.filter(item =>
+        (item.icon.includes('Standard') || item.icon.includes('Set6')) && // Gives us most recent set/setX. Need both to get all relevant items
+        item.desc !== item.name &&  // Eliminates weird/misc items that riot leaves in
+        item.effects.Mana != 30 || // There are two different Blue Buffs and how we will get the updated one
+        item.name === 'Archangel\'s Staff' // The only Archangel's Staff is in set 5 for some reason
+    );
+    
     // Now, filteredItems should only contain Set 6 items
     res.json(filteredItems);
 };
@@ -15,5 +17,5 @@ const getAllItems = async (req, res) => {
 
 
 module.exports = {
-  getAllItems
+    getAllItems
 }

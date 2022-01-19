@@ -2,7 +2,7 @@ import React, {  } from "react";
 import { Route, Routes } from "react-router-dom";
 
 
-import Admin from "./pages/Admin";
+import Items from "./pages/Items";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 
@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/items" element={<Admin />} />
+        <Route path="/items" element={<Items />} />
         {/* <Route path="/comps" element={} />
         <Route path="/leaderboards" element={} />
         <Route path="/guides" element={} /> */}
