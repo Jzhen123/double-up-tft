@@ -10,7 +10,7 @@ import './Navbar.css';
 
 const items = [
     { label: 'Home', icon: 'pi pi-fw pi-home', route: '/' },
-    { label: 'Admin', icon: 'pi pi-fw pi-database', route: '/admin' },
+    { label: 'Items', icon: 'pi pi-fw pi-database', route: '/items' },
     { label: 'Top Comps', icon: 'pi pi-fw pi-users', route: '/comps' },
     { label: 'Leaderboards', icon: 'pi pi-fw pi-globe', route: '/leaderboards' },
     { label: 'Login', icon: 'pi pi-fw pi-user', route: '/login' },

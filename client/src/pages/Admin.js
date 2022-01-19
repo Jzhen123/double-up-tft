@@ -6,8 +6,10 @@ import { Button } from "primereact/button";
 import { classNames } from "primereact/utils";
 
 import { createChampion } from "../api/champion";
-
+import { getAllItems } from "../api/item";
 export default () => {
+    const items = getAllItems();
+    console.log(items);
     const [formData, setFormData] = useState({});
     const defaultValues = {
         name: "",
@@ -29,10 +31,11 @@ export default () => {
 
     const getFormErrorMessage = (name) =>
         errors[name] && <small className="p-error">{errors[name].message}</small>;
-
+        // const url = json.items[405].icon.toLowerCase().replace('dds', 'png');
     return (
         <>
-            <div className="form-demo p-col" style={{ marginTop: 50 }}>
+            {/* <img src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${url}`} /> */}
+            {/* <div className="form-demo p-col" style={{ marginTop: 50 }}>
                 <div className="p-d-flex p-jc-center">
                     <div className="card">
                         <form onSubmit={handleSubmit(onSubmit)} className="p-fluid">
@@ -92,7 +95,7 @@ export default () => {
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </>
     );
 }
