@@ -3,12 +3,11 @@ const hash = require('fnv1a');
 
 const getAllItems = async (req, res) => {
     let filteredItems = tftJSON.items.slice(348); // Only need indexes 348 and onward in items array
-    console.log(filteredItems);
 
     filteredItems = filteredItems.filter(item =>
-        (item.icon.includes('Standard') || item.icon.includes('Set6')) && // Gives us most recent set/setX. Need both to get all relevant items
-        item.desc !== item.name &&  // Eliminates weird/misc items that riot leaves in
-        item.effects.Mana != 30 || // There are two different Blue Buffs and how we will get the updated one
+        ((item.icon).toLowerCase().includes('standard') || (item.icon).toLowerCase().includes('set6')) && // Gives us most recent set/setX. Need both to get all relevant items
+        item.desc !== item.name &&  // Eliminates misc items
+        item.effects.Mana != 30 || // Filter out old Blue Buff
         item.name === 'Archangel\'s Staff' // The only Archangel's Staff is in set 5 for some reason
     );
 
@@ -41,10 +40,8 @@ const getAllItems = async (req, res) => {
                     continue;
                 } else if (words[i] === '%i:star%') {
                     words[i] = '<TftStarIcon />';
-                }
-                if (words[i].includes('<tftitemrules>')) {
+                } else if (words[i].includes('<tftitemrules>') || words[i].includes('</tftitemrules>')) {
                     words[i] = words[i].replace('<tftitemrules>', '');
-                } else if (words[i].includes('</tftitemrules>')) {
                     words[i] = words[i].replace('</tftitemrules>', '');
                 }
             }
@@ -53,7 +50,6 @@ const getAllItems = async (req, res) => {
         item.desc = matchKeys();
         return item;
     })
-    // console.log(filteredItems)
     res.json(filteredItems);
 };
 
