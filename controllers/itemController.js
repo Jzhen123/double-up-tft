@@ -3,57 +3,56 @@ const hash = require('fnv1a');
 
 const getAllItems = async (req, res) => {
     let filteredItems = tftJSON.items.slice(348); // Only need indexes 348 and onward in items array
+    // console.log(filteredItems);
 
     filteredItems = filteredItems.filter(item =>
         (item.icon.includes('Standard') || item.icon.includes('Set6')) && // Gives us most recent set/setX. Need both to get all relevant items
         item.desc !== item.name &&  // Eliminates weird/misc items that riot leaves in
-        item.effects.Mana != 30 || // There are two different Blue Buffs and how we will get the updated one
-        item.name === 'Archangel\'s Staff' // The only Archangel's Staff is in set 5 for some reason
+        item.effects.Mana != 30 // There are two different Blue Buffs and how we will get the updated one
+        // item.name === 'Archangel\'s Staff' // The only Archangel's Staff is in set 5 for some reason
     );
 
-    for (let item of filteredItems) {
+    filteredItems = filteredItems.map(item => {
         item.icon = item.icon.toLowerCase().replace('dds', 'png'); // url path for image must be reformatted to use client-side
+        let descriptionSeperated = item.desc.split(' ');
 
-        let newDesc = item.desc.split(' ');
-        const checkIfWordsAreSpecial = (words = newDesc) => {
+        const matchKeys = (words = descriptionSeperated) => {
+            const keyWithSymbols = /\@.+?\@/g; // regex to find key but returns '@key@'
+            const keyWithoutSymbols = /(?<=\@).+?(?=\@)/g; // regex to find key but returns 'key'
+
             for (let i = 0; i < words.length; i++) {
-                let word = words[i];
-                if (word.includes('/@')) {
-                    const subWords = word.split('/');
-                    let desc = checkIfWordsAreSpecial(subWords);
-                    desc = desc.replaceAll(' ', '/');
-                    words[i] = desc;
+                if (words[i].includes('/@')) { // If a key has 3 values for each star level, e.g. @1StarShieldValue@/@2StarShieldValue@/@3StarShieldValue@
+                    words[i] = matchKeys(words[i].split('/')).replaceAll(' ', '/');
                     continue;
-                }
-
-                if (word.match(/\@.+?\@/g)) { // If word is a string with '@' on both ends, e.g. '@TooltipBonusAS@'
-                    if (item.effects[word.match(/(?<=\@).+?(?=\@)/g)]) { // If key 'TooltipBonusAS' already exist in item.effects object
-                        words[i] = word.replace(word.match(/\@.+?\@/g), (item.effects[word.match(/(?<=\@).+?(?=\@)/g)]).toString())
-                        continue;
-                    } else if (word.match(/(?<=\@).+?(?=\@)/g)[0] == 'Lifesteal') { // Edge case because Lifesteal != LifeSteal because riot things
-                        words[i] = word.replace(word.match(/\@.+?\@/g), (item.effects['LifeSteal']).toString())
-                        continue;
+                } else if (words[i].match(keyWithSymbols)) { // If a key has '@' on both ends, e.g. '@ShieldDuration@'
+                    if (item.effects[words[i].match(keyWithoutSymbols)]) {
+                        words[i] = words[i].replace(words[i].match(keyWithSymbols), (item.effects[words[i].match(keyWithoutSymbols)]).toString())
+                    } else if (words[i].match(keyWithoutSymbols)[0] == 'Lifesteal') { // Edge case
+                        words[i] = words[i].replace(words[i].match(keyWithSymbols), (item.effects['LifeSteal']).toString())
+                    } else {
+                        let key = words[i].match(keyWithoutSymbols)[0].toLowerCase();
+                        key = hash(key).toString(16).padStart(8, '0');
+                        key = `{${key}}`;
+                        words[i] = words[i].replace(words[i].match(keyWithSymbols), (item.effects[key]).toString());
                     }
-
-                    let key = word.match(/(?<=\@).+?(?=\@)/g)[0].toLowerCase(); // Turns '@TooltipBonusAS@' into 'tooltipbonusas'
-                    key = hash(key).toString(16);
-                    key = key.padStart(8, '0'); // Sometimes hash has the correct numbers but needs more '0's in front because they need to have a length of 8
-
-                    key = `{${key}}` // Turns '5100c273' into '{5100c273}', which is needed to find value of the hashed version of the key '@TooltipBonusAS@'
-                    if (item.effects[key]) word = word.replace(word.match(/\@.+?\@/g), (item.effects[key]).toString()) // replaces '@TooltipBonusAS@%' with '50%'
-                    words[i] = word;
-                } else if (word.includes('%i:scale')) {
+                } else if (words[i].includes('%i:scale')) {
                     words.splice(i, 1);
                     i--;
+                } else if (words[i] === '%i:star%') {
+                    words[i] = '<TftStarIcon />';
+                }
+                if (words[i].includes('<tftitemrules>')) {
+                    words[i] = words[i].replace('<tftitemrules>', '');
+                } else if (words[i].includes('</tftitemrules>')) {
+                    words[i] = words[i].replace('</tftitemrules>', '');
                 }
             }
             return words.join(' ');
         }
-        let duh = checkIfWordsAreSpecial();
-        item.desc = duh;
-        // }
-    }
-    // Now, filteredItems should only contain Set 6 items
+        item.desc = matchKeys();
+        return item;
+    })
+    console.log(filteredItems)
     res.json(filteredItems);
 };
 
