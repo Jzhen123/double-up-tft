@@ -40,10 +40,10 @@ const getAllItems = async (req, res) => {
                     continue;
                 } else if (words[i] === '%i:star%') {
                     words[i] = '<TftStarIcon />';
-                } else if (words[i].includes('<tftitemrules>') || words[i].includes('</tftitemrules>')) {
-                    words[i] = words[i].replace('<tftitemrules>', '');
-                    words[i] = words[i].replace('</tftitemrules>', '');
                 }
+                words[i] = words[i].replace('<tftitemrules>', '');
+                words[i] = words[i].replace('</tftitemrules>', '');
+                words[i] = words[i].replace(/d.]/, 'd]').replace(/<br>Elusive/, ']\n[Elusive');
             }
             return words.join(' ');
         }
