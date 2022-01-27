@@ -14,7 +14,6 @@ export default () => {
         const response = await getAllItems();
         setItems(response);
         console.log(response);
-        console.log(response);
     }
 
 
@@ -22,7 +21,7 @@ export default () => {
         <>
             {items.length > 0 ?
                 items.map((item, i) =>
-                    <ItemIcon item={item} tooltipIdentifier={i.toString()} />
+                    <ItemIcon key={i} item={item} tooltipIdentifier={i.toString()} />
                 )
             : null}
         </>
