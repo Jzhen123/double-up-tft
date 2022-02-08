@@ -43,7 +43,7 @@ const getAllItems = async (req, res) => {
                 }
                 words[i] = words[i].replace('<tftitemrules>', '');
                 words[i] = words[i].replace('</tftitemrules>', '');
-                words[i] = words[i].replace(/d.]/, 'd]').replace(/<br>Elusive/, ']\n[Elusive');
+                words[i] = words[i].replace(/d.]/, 'd]').replace(/<br>Elusive/, ']\n\n[Elusive');
             }
             return words.join(' ');
         }

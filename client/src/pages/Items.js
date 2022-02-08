@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Tooltip } from "primereact/tooltip";
 import ItemIcon from "../components/ItemIcon";
 
 import { getAllItems } from "../api/item";
@@ -21,7 +20,7 @@ export default () => {
         <>
             {items.length > 0 ?
                 items.map((item, i) =>
-                    <ItemIcon key={i} item={item} tooltipIdentifier={i.toString()} />
+                    <ItemIcon key={i} item={item} items={items} tooltipIdentifier={i.toString()} />
                 )
             : null}
         </>

@@ -3,8 +3,11 @@ import { Tooltip } from 'primereact/tooltip';
 import parse from 'html-react-parser';
 
 
-export default ({ item, tooltipIdentifier }) => {
+export default ({ item, items, tooltipIdentifier }) => {
     const parsedDescription = parse(item.desc);
+    const recipeFirstItem = item.from.length ? items[(items.findIndex(el => el.id == item.from[0]))].icon : null
+    const recipeSecondItem = item.from.length ? items[(items.findIndex(el => el.id == item.from[1]))].icon : null
+    const url = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/';
 
     return (
         <>
@@ -13,7 +16,7 @@ export default ({ item, tooltipIdentifier }) => {
                     <div className="text-3xl font-medium mb-1">
                         <div className="grid">
                             <div className="col-fixed" style={{ width: "50px", marginRight: "10px" }}>
-                                <img className={`img${tooltipIdentifier}`} alt="logo" src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${item?.icon}`} width="50px" />
+                                <img className={`img${tooltipIdentifier}`} alt="logo" src={url + item?.icon} width="50px" />
                             </div>
                             <div className="col pb-0">
                                 <div className="grid pt-0 pb-0">
@@ -36,11 +39,19 @@ export default ({ item, tooltipIdentifier }) => {
                         {parsedDescription}
                     </div>
 
-
+                    {item.from.length > 0 &&
+                        <div className="font-medium m-0" style={{ maxWidth: "50ch" }}>
+                            <br />
+                            Made from
+                            <img alt="logo" src={url + recipeFirstItem} width="30px" />
+                            +
+                            <img alt="logo" src={url + recipeSecondItem} width="30px" />
+                        </div>
+                    }
                 </div>
             </Tooltip>
 
-            <img className={`img${tooltipIdentifier}`} alt="logo" src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${item?.icon}`} height="80px" />
+            <img className={`img${tooltipIdentifier} m-2`} alt="logo" src={url + item?.icon} style={{ borderRadius: '20%' }} height="80px" />
         </>
     );
 }
